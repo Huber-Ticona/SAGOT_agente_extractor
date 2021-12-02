@@ -1,0 +1,7 @@
+
+
+[Version 5.2 ()]
+- Se añadio el capturador de guías y el capturador de notas de credito.
+
+[Version 5.1 (20-9-2021)]
+- Ahora los numeros internos se detectan automaticamente.

@@ -1,0 +1,5 @@
+host:127.0.0.1
+port:5000
+filename:/Users/super/Desktop/VENTAS/
+dir_guias:/Users/super/Desktop/Madenco/capturador/guias/
+dir_creditos:/Users/super/Desktop/Madenco/capturador/credito/
