@@ -410,13 +410,13 @@ class menu(QMainWindow):
             interno = interno.split(':')
             #print(interno)
             interno = int(interno[1]) #NRO INTERNO TIPO INT
-            print(interno)
+            #print(interno)
 
             folio = linea_uno[38:59]  #CAPTURA EL TEXTO COMPLETO DEL FOLIO
             folio = folio.split(':')
             #print(folio)
             folio = int(folio[1])     #FOLIO TIPO INT
-            print(folio)
+            #print(folio)
 
             linea_dos = lines[1]
             fecha = linea_dos[0:37]
@@ -426,7 +426,7 @@ class menu(QMainWindow):
             fecha = fecha[1].split(' ')
             #print(fecha)
             fecha = fecha[0] #FECHA DE TIPO STRING
-            print(fecha)
+            #print(fecha)
 
             rut = linea_dos[37:56]  #CAPTURA TODO EL TEXTO DEL RUT
             #print(rut)
@@ -434,7 +434,7 @@ class menu(QMainWindow):
             #print(rut)
             rut = rut[1].split(' ')
             rut = rut[0]  #RUT DE TIPO STRING
-            print(rut)
+            #print(rut)
 
             linea_tres = lines[2]
             razon_social = linea_tres[0:56]
@@ -442,17 +442,17 @@ class menu(QMainWindow):
             razon_social = razon_social.split(': ')
             #print(razon_social)
             razon_social = razon_social[1]
-            print(razon_social)
+            #print(razon_social)
 
             doc_ref = linea_tres[56:80].split(': ') #doc ref el max se estimo.
-            print(doc_ref)
+            
             doc_ref = doc_ref[1].split('  ')
-            print(doc_ref)
+            
             doc_ref = doc_ref[0]  #DOC REF DE TIPO STRING
-            print(doc_ref)
+            
 
             doc_ref = doc_ref.split(' ')
-            print(doc_ref)
+            #print(doc_ref)
 
             tipo_doc = 'NINGUNO'
             if doc_ref[0] == '':
@@ -468,28 +468,28 @@ class menu(QMainWindow):
                 tipo_doc = 'BOLETA'
                 doc_ref = int(doc_ref[1])
                 
-            print(tipo_doc)
-            print(doc_ref)
+            #print(tipo_doc)
+            #print(doc_ref)
 
             linea_cuatro = lines[3]
             giro = linea_cuatro[0:77].split(': ')
             giro = giro[1]
-            print(giro)
+            #print(giro)
 
             direccion = lines[4]
             direccion = direccion[0:42]  
-            print(direccion)
+            #print(direccion)
 
             linea_seis = lines[5]
             telefono = linea_seis[0:32].split(': ')
             telefono = telefono[1]
-            print(telefono)
+            #print(telefono)
 
             linea_nueve = lines[8]
             vendedor = linea_nueve.split(': ')
             vendedor = vendedor[1].split('  ')
             vendedor = vendedor[0]
-            print(vendedor)
+            #print(vendedor)
 
             observacion = lines[9]
             #print(observacion)
@@ -497,30 +497,30 @@ class menu(QMainWindow):
             #print(observacion)
             observacion = observacion[1].split('   ')
             observacion = observacion[0]
-            print(observacion)
+            #print(observacion)
 
             campo_regla = lines[10].split(': ') # Mas bien "observacion de despacho" mostrado en la guia de despacho
             #print(campo_regla)
             campo_regla = campo_regla[1]
             #print(len(campo_regla))
             campo_regla = campo_regla[0:102]  #se elimina el caracter de salto de linea
-            print(campo_regla)
+            #print(campo_regla)
 
             linea_doce = lines[11]
             hora = linea_doce[0:21].split(': ')
             #print(hora)
             hora = hora[1].split(' ')
             hora = hora[0]
-            print(hora)
+            #print(hora)
 
             linea_trece = lines[12]
             chofer = linea_trece[26:50].split(': ')
             chofer = chofer[1]
-            print(chofer)
+            #print(chofer)
             rut_chofer = linea_trece[0:26].split(': ')
             rut_chofer = rut_chofer[1].split(' ')
             rut_chofer = rut_chofer[0]
-            print(rut_chofer)
+            #print(rut_chofer)
             print('-------------------- ITEMS -----------------------')
             #-------------------- ITEMS -----------------------#
             inicio = 14
@@ -529,6 +529,7 @@ class menu(QMainWindow):
             descripciones = []
             unitarios = []
             totales = []
+            retirado = []
             while lines[inicio] != '\n' :
 
                 #print(f'Item: {str(i)} - ' + lines[inicio])
@@ -536,31 +537,32 @@ class menu(QMainWindow):
 
                 cantidad = item[0:8].replace(',','.',1)
                 cantidad = float(cantidad)
-                print(cantidad)
+                #print(cantidad)
 
                 descripcion =  item[20:115] #CAPTURA SOLO EL TEXTO DE LA DESCRIPCION DEL PRODUCTO
-                print(descripcion)
+                #print(descripcion)
 
                 unitario = item[120:134] #ESTIMA EL VALOR UNITARIO ENTRE [limite exacto --> 120 : 134 <-- limite exacto] 
                 #print(unitario)
                 try:
                     unitario = unitario.replace(',' , '.' , 1 )  
                     unitario = float(unitario)
-                    print(unitario)
+                    #print(unitario)
 
                 except ValueError:
                     print('Error de valores al capturar guias')
                     unitario = 0
-                    print(unitario)
+                    #print(unitario)
 
 
                 total = cantidad * unitario 
-                print(total)
+                #print(total)
 
                 cantidades.append(cantidad)
                 descripciones.append(descripcion)
                 unitarios.append(unitario)
                 totales.append(total)
+                retirado.append(0.0)
 
                 i += 1
                 inicio += 1
@@ -571,20 +573,20 @@ class menu(QMainWindow):
             neto = lines[49].split(': ')  #neto
             neto = neto[1].split(' ')
             neto = float( neto[0].replace(',','.',1) ) #neto de tipo float
-            print(neto)
+            #print(neto)
 
             monto_final = lines[51].split(': ') #monto total de la guia
             monto_final = monto_final[1].split(' ')
             monto_final = float( monto_final[0].replace(',','.',1) )   #monto final de tipo float
-            print(monto_final)
+            #print(monto_final)
 
             tipo = lines[52].split(': ') #tipo de guia *falta por DESCUBRIR
             tipo = tipo[1].split('  ')
             tipo = tipo[0]
-            print(tipo)
+            #print(tipo)
             aux = fecha.split('-')
             fecha_final = aux[2] +'-' + aux[1] + '-' + aux[0] + ' ' + hora + ':00'
-            print(fecha_final)
+            #print(fecha_final)
 
             formato = {
                 "cantidades" : cantidades, #
@@ -602,7 +604,10 @@ class menu(QMainWindow):
                 "campo_regla" : campo_regla,#
                 "neto" : neto,#
                 "monto_final" : monto_final,#
-                "tipo": tipo      
+                "tipo": tipo ,
+                "retirado" : retirado,
+                "estado_retiro" : "NO RETIRADO",
+                "revisor": "NO REVISADO"
             }
             detalle = json.dumps(formato)
 
@@ -797,7 +802,15 @@ class menu(QMainWindow):
     def busqueda(self):
         while(self.estado):
             if(self.conn_estado):
-                self.lb_detalle.setText('Buscando Factura: ' + str(self.factura) + ' -- ' + 'Boleta: ' + str(self.boleta))
+                #self.lb_detalle.setText('Buscando Factura: ' + str(self.factura) + ' -- ' + 'Boleta: ' + str(self.boleta))
+                self.lb_det_bol.setText('Buscando Boleta: ' + str(self.boleta))
+                self.lb_det_fact.setText('Buscando Factura: ' + str(self.factura))
+
+                self.lb_enc_bol.setText('')
+                self.lb_alm_bol.setText('')
+                self.lb_enc_fact.setText('')
+                self.lb_alm_fact.setText('')
+
                 self.linefactura.setText( str(self.factura))
                 self.lineboleta.setText(str(self.boleta))
                 lista_boletas , lista_facturas = self.obtener_fact_bol_ordenadas()
@@ -816,18 +829,20 @@ class menu(QMainWindow):
                         logging.debug("boleta omitida")
                         time.sleep(1)
                     ##############################################
+                    #self.lb_factura.setText('')
+                    #self.lb_boleta.setText('')
                 except EOFError:
                     self.conn_estado = False
                     print('se perdio la conexion consultando al servidor')
 
             else:
                 self.conectar()
-            self.lb_factura.setText('')
-            self.lb_boleta.setText('')
+            
             
             
 
-        self.lb_detalle.setText('BUSQUEDA FINALIZADA')
+        self.lb_det_bol.setText('BUSQUEDA FINALIZADA')
+        self.lb_det_fact.setText('BUSQUEDA FINALIZADA')
         print('BUSKEDA FINALIZADA')
 
     def busqueda_guia(self):
@@ -835,7 +850,10 @@ class menu(QMainWindow):
         while(self.estado2):
             if self.conn_estado: #ESTADO DE LA CONEXION CON EL SERVIDOR
 
-                self.lb_detalle2.setText('Buscando Guia: ' + str(self.guia) )
+                self.lb_det_guia.setText('Buscando Guia: ' + str(self.guia))
+                self.lb_enc_guia.setText('')
+                self.lb_alm_guia.setText('')
+
                 print('----------------------------------- GUIA -----------------------------------')
                 self.lineguia.setText(str(self.guia))
                 lista_guias = self.obtener_guias_ordenadas()
@@ -846,10 +864,10 @@ class menu(QMainWindow):
                     if lista_guias[0] != str(self.guia): #que no consulte siempre a la BD
 
                         if( self.conexion.root.buscar_guia( int(self.guia)) == False ):       #
-                                self.lb_guia.setText('ENCONTRADA: '+ str(self.guia))                          #                  
+                                self.lb_enc_guia.setText('ENCONTRADA: '+ str(self.guia))                          #                  
                                 self.envio_guia(str(self.guia))
                                 time.sleep(0.2)
-                                self.lb_guia.setText('ALMACENADA: '+ str(self.guia))    
+                                self.lb_alm_guia.setText('ALMACENADA: '+ str(self.guia))    
                                 nuevo_index = index1 - 1
                                 if nuevo_index > 0:
                                     self.guia = lista_guias[nuevo_index]
@@ -862,7 +880,7 @@ class menu(QMainWindow):
                                 
                                                             
                         else:           #si esta en la BD  
-                            self.lb_guia.setText('EN LA BD: '+ str(self.guia))                                                     #
+                            self.lb_enc_guia.setText('EN LA BD: '+ str(self.guia))                                                     #
                             nuevo_index = index1 - 1  
                             if nuevo_index > 0 : #se captura el indice que continua si es que existe
                                 self.guia = lista_guias[nuevo_index]
@@ -877,58 +895,60 @@ class menu(QMainWindow):
                         if self.g_top: #si esta al inicio de la lista, se analisa su almacenamiento
 
                             if( self.conexion.root.buscar_guia( int(self.guia)) == False ):       #
-                                self.lb_guia.setText('ENCONTRADA: '+ str(self.guia))                          #                  
+                                self.lb_enc_guia.setText('TOP ENCONTRADA: '+ str(self.guia))                          #                  
                                 self.envio_guia(str(self.guia))
                                 time.sleep(0.2)
-                                self.lb_guia.setText('ALMACENADA: '+ str(self.guia))    
+                                self.lb_alm_guia.setText('TOP ALMACENADA: '+ str(self.guia))    
                                 self.g_top = False #se cambia para que no siga consultando a la BD inecesariamente.
                                 print('GUIA TOP ALMACENADA: ' + lista_guias[index1]  + ' -  Buscando mayor a: ' + str(self.guia) )
                             else:
                                 self.g_top = False
-                                self.lb_guia.setText('EN LA BD: '+ str(self.guia)) 
+                                self.lb_enc_guia.setText('TOP EN LA BD: '+ str(self.guia)) 
                                 print('TOP GUIA en la BD - buscando MAYOR A: ' + str(self.guia))
 
                         else:
-                            self.lb_guia.setText('EN LA BD: '+ str(self.guia))    
+                            self.lb_enc_guia.setText('TOP EN LA BD: '+ str(self.guia))    
                             print('Top GUIA almacenado anteriormetne - Buscando GUIA mayor a: '+ str(self.guia))
                     
                     time.sleep(self.rango2)
 
                 except ValueError:
                     print('GUIA no encontrada en la lista')
-                    self.lb_guia.setText('NO ENCONTRADA: '+ str(self.guia))    
+                    self.lb_enc_guia.setText('NO ENCONTRADA: '+ str(self.guia))    
                     time.sleep(2)
+                except EOFError:
+                    self.conn_estado = False
+                    print('se perdio la conexion consultando al servidor sobre guia')
+
 
                 print('------------------------------------------------------------------')
             else:
+                
                 self.conectar()
-                self.lb_guia.setText('reconectando...')
+                time.sleep(2)
+                self.lb_det_guia.setText('reconectando...')
 
-        self.lb_detalle2.setText('BUSQUEDA FINALIZADA')
-        self.lb_guia.setText(':3')
+        self.lb_det_guia.setText('BUSQUEDA FINALIZADA')
 
     def busqueda_credito(self):
     
         while(self.estado3):
             if self.conn_estado: #ESTADO DE LA CONEXION CON EL SERVIDOR
 
-                #self.lb_detalle2.setText('Buscando Guia: ' + str(self.guia) )
+                self.lb_det_cre.setText('Buscando CREDITO: ' + str(self.credito) )
+                self.lb_enc_cre.setText('')  
+                self.lb_alm_cre.setText('')  
                 print('----------------------------------- CREDITO -----------------------------------')
                 self.linecredito.setText(str(self.credito))
                 lista_creditos = self.obtener_creditos_ordenadas()
-                print('a')
                 try:
                     index1 = lista_creditos.index(str(self.credito))
-                    print('b')
                     if lista_creditos[0] != str(self.credito): #que no consulte siempre a la BD
-                        print('c')
                         if( self.conexion.root.buscar_credito( int(self.credito)) == False ):       #
-                                #self.lb_guia.setText('ENCONTRADA: '+ str(self.credito))                          #                  
-                                print('d')
+                                self.lb_enc_cre.setText('ENCONTRADA: '+ str(self.credito))                          #          
                                 self.envio_credito(str(self.credito))
-                                print('e')
                                 time.sleep(0.2)
-                                #self.lb_guia.setText('ALMACENADA: '+ str(self.credito))    
+                                self.lb_alm_cre.setText('ALMACENADA: '+ str(self.credito))    
                                 nuevo_index = index1 - 1
                                 if nuevo_index > 0:
                                     self.credito = lista_creditos[nuevo_index]
@@ -941,7 +961,7 @@ class menu(QMainWindow):
                                 
                                                             
                         else:           #si esta en la BD  
-                            #self.lb_guia.setText('EN LA BD: '+ str(self.credito))                                                     #
+                            self.lb_enc_cre.setText('EN LA BD: '+ str(self.credito))                                                     #
                             nuevo_index = index1 - 1  
                             if nuevo_index > 0 : #se captura el indice que continua si es que existe
                                 self.credito = lista_creditos[nuevo_index]
@@ -953,40 +973,44 @@ class menu(QMainWindow):
                                 print('NOTA CREDITO en la BD: ' + lista_creditos[index1]  + ' -  Buscando el top : ' + lista_creditos[nuevo_index] )
 
                     else:
-                        print('F')
                         if self.c_top: #si esta al inicio de la lista, se analisa su almacenamiento
 
                             if( self.conexion.root.buscar_credito( int(self.credito)) == False ):       #
-                                #self.lb_guia.setText('ENCONTRADA: '+ str(self.credito))                          #                  
-                                #self.envio_guia(str(self.guia))
+                                self.lb_enc_cre.setText('TOP ENCONTRADA: '+ str(self.credito))                          #                  
+                                self.envio_credito(str(self.credito))
                                 time.sleep(0.2)
-                                #self.lb_guia.setText('ALMACENADA: '+ str(self.credito))    
+                                self.lb_alm_cre.setText('TOP ALMACENADA: '+ str(self.credito))    
                                 self.c_top = False #se cambia para que no siga consultando a la BD inecesariamente.
                                 print('NOTA CREDITO TOP ALMACENADA: ' + lista_creditos[index1]  + ' -  Buscando mayor a: ' + str(self.credito) )
                             else:
                                 self.c_top = False
-                                #self.lb_guia.setText('EN LA BD: '+ str(self.credito)) 
+                                self.lb_enc_cre.setText('top EN LA BD: '+ str(self.credito)) 
                                 print('TOP NOTA CREDITO en la BD - buscando MAYOR A: ' + str(self.credito))
 
                         else:
-                            #self.lb_guia.setText('EN LA BD: '+ str(self.credito))    
+                            self.lb_enc_cre.setText('top EN LA BD: '+ str(self.credito))    
                             print('Top NOTA CREDITO almacenado anteriormetne - Buscando NOTA CREDITO mayor a: '+ str(self.credito))
                     
                     time.sleep(self.rango3)
 
                 except ValueError:
                     print('nota de credito no encontrada en la lista')
-                    #self.lb_guia.setText('NO ENCONTRADA: '+ str(self.guia))    
+                    self.lb_enc_cre.setText('NO ENCONTRADA: '+ str(self.credito))    
                     time.sleep(2)
+                except EOFError:
+                    self.conn_estado = False
+                    print('se perdio la conexion consultando al servidor sobre guia')
 
                 print('------------------------------------------------------------------')
             else:
+                
                 self.conectar()
+                time.sleep(2)
                 print('desde credito ... reconectando ...')
-                #self.lb_guia.setText('reconectando...')
+                self.lb_det_cre.setText('reconectando...')
 
         print('busqueda de notas de credito finalizada')
-        #self.lb_detalle2.setText('BUSQUEDA FINALIZADA')
+        self.lb_det_cre.setText('BUSQUEDA FINALIZADA')
         #self.lb_guia.setText(':3')
 
     def busqueda_rango_fact(self, lista_facturas):
@@ -998,10 +1022,10 @@ class menu(QMainWindow):
             if lista_facturas[0] != str(self.factura): #que no consulte siemrpre a la BD
 
                 if( self.conexion.root.buscar_fact( int(self.factura)) == False ):       #
-                        self.lb_factura.setText('ENCONTRADA: '+ str(self.factura))                                            
+                        self.lb_enc_fact.setText('ENCONTRADA: '+ str(self.factura))                                            
                         self.envio_factura(str(self.factura))
                         time.sleep(0.2) 
-                        self.lb_factura.setText('ALMACENADA: '+ str(self.factura))
+                        self.lb_alm_fact.setText('ALMACENADA: '+ str(self.factura))
                         nuevo_index = index1 - 1
                         if nuevo_index > 0:
                             self.factura = lista_facturas[nuevo_index]
@@ -1014,8 +1038,8 @@ class menu(QMainWindow):
                         
                         
                                                     
-                else:           #si esta en la BD
-                    self.lb_factura.setText('EN LA BD: '+ str(self.factura))                                                   #
+                else:          #si esta en la BD
+                    self.lb_enc_fact.setText('EN LA BD: '+ str(self.factura))                                                   #
                     nuevo_index = index1 - 1  
                     if nuevo_index > 0 : #se captura el indice que continua si es que existe
                         self.factura = lista_facturas[nuevo_index]
@@ -1030,19 +1054,22 @@ class menu(QMainWindow):
                 if self.f_top: #si esta al inicio de la lista, se analisa su almacenamiento
 
                     if( self.conexion.root.buscar_fact( int(self.factura)) == False ):       #
-                        self.lb_factura.setText('ENCONTRADA: '+ str(self.factura))
+                        self.lb_enc_fact.setText('TOP ENCONTRADA: '+ str(self.factura))
                         time.sleep(0.2)                          #                  
                         self.envio_factura(str(self.factura))
-                        self.lb_factura.setText('ALMACENADA: '+ str(self.factura))
+                        self.lb_alm_fact.setText('TOP ALMACENADA: '+ str(self.factura))
                         self.f_top = False #se cambia para que no siga consultando a la BD inecesariamente.
                         print('FACT TOP ALMACENADA: ' + lista_facturas[index1]  + ' -  Buscando mayor a: ' + str(self.factura) )
                     else:
                         self.f_top = False
-                        self.lb_factura.setText('EN LA BD: '+ str(self.factura))
+
+                        self.lb_enc_fact.setText('TOP EN LA BD: '+ str(self.factura))
+                        self.lb_alm_fact.setText('')
+                        
                         print('TOP FACT en la BD - buscando MAYOR A: ' + str(self.factura) )
 
                 else:
-                    self.lb_factura.setText('EN LA BD: '+ str(self.factura))
+                    self.lb_enc_fact.setText('TOP EN LA BD: '+ str(self.factura))
                     print('Top FACT almacenado anteriormetne - Buscando factura mayor a: '+ str(self.factura) ) 
              
 
@@ -1050,7 +1077,7 @@ class menu(QMainWindow):
 
         except ValueError:
             print('factura no encontrada en la lista')
-            self.lb_factura.setText('NO ENCONTRADA: '+ str(self.factura))
+            self.lb_enc_fact.setText('NO ENCONTRADA: '+ str(self.factura))
             self.fact_encont = False
             time.sleep(2)
         print('------------------------------------------------------------------')     
@@ -1064,10 +1091,10 @@ class menu(QMainWindow):
             if lista_boletas[0] != str(self.boleta): #que no consulte siemrpre a la BD
 
                 if( self.conexion.root.buscar_bol( int(self.boleta)) == False ):       #
-                        self.lb_boleta.setText('ENCONTRADA: '+ str(self.boleta))                          #                  
+                        self.lb_enc_bol.setText('ENCONTRADA: '+ str(self.boleta))                          #                  
                         self.envio_boleta(str(self.boleta))
                         time.sleep(0.2)
-                        self.lb_boleta.setText('ALMACENADA: '+ str(self.boleta))    
+                        self.lb_alm_bol.setText('ALMACENADA: '+ str(self.boleta))    
                         nuevo_index = index1 - 1
                         if nuevo_index > 0:
                             self.boleta = lista_boletas[nuevo_index]
@@ -1080,7 +1107,7 @@ class menu(QMainWindow):
                         
                                                     
                 else:           #si esta en la BD  
-                    self.lb_boleta.setText('EN LA BD: '+ str(self.boleta))                                                     #
+                    self.lb_enc_bol.setText('EN LA BD: '+ str(self.boleta))                                                     #
                     nuevo_index = index1 - 1  
                     if nuevo_index > 0 : #se captura el indice que continua si es que existe
                         self.boleta = lista_boletas[nuevo_index]
@@ -1095,26 +1122,27 @@ class menu(QMainWindow):
                 if self.b_top: #si esta al inicio de la lista, se analisa su almacenamiento
 
                     if( self.conexion.root.buscar_bol( int(self.boleta)) == False ):       #
-                        self.lb_boleta.setText('ENCONTRADA: '+ str(self.boleta))                          #                  
+                        self.lb_enc_bol.setText('TOP ENCONTRADA: '+ str(self.boleta))                          #                  
                         self.envio_boleta(str(self.boleta))
                         time.sleep(0.2)
-                        self.lb_boleta.setText('ALMACENADA: '+ str(self.boleta))    
+                        self.lb_alm_bol.setText('TOP ALMACENADA: '+ str(self.boleta))    
                         self.b_top = False #se cambia para que no siga consultando a la BD inecesariamente.
                         print('BOL TOP ALMACENADA: ' + lista_boletas[index1]  + ' -  Buscando mayor a: ' + str(self.boleta) )
                     else:
                         self.b_top = False
-                        self.lb_boleta.setText('EN LA BD: '+ str(self.boleta))    
+                        self.lb_enc_bol.setText('TOP EN LA BD: '+ str(self.factura))
+                        self.lb_alm_bol.setText('') 
                         print('TOP BOL en la BD - buscando MAYOR A: ' + str(self.boleta) )
 
                 else:
-                    self.lb_boleta.setText('EN LA BD: '+ str(self.boleta))    
+                    self.lb_enc_bol.setText('TOP EN LA BD: '+ str(self.boleta))    
                     print('Top BOL almacenado anteriormetne - Buscando boleta mayor a: '+ str(self.boleta) ) 
             
             time.sleep(self.rango)
 
         except ValueError:
             print('boleta no encontrada en la lista')
-            self.lb_boleta.setText('NO ENCONTRADA: '+ str(self.boleta))    
+            self.lb_enc_bol.setText('NO ENCONTRADA: '+ str(self.boleta))    
             time.sleep(2)
         print('------------------------------------------------------------------')  
                             
@@ -1203,7 +1231,7 @@ class menu(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     myappid = 'madenco.extractor' # arbitrary string
-    app.setWindowIcon(QIcon('icono_imagen/search.ico'))
+    app.setWindowIcon(QIcon('icono_imagen/agente.ico'))
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid) 
     inicio = menu()
     inicio.show()

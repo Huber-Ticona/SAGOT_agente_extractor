@@ -62,45 +62,6 @@
      <string>CONECTAR</string>
     </property>
    </widget>
-   <widget class="QLabel" name="lb_detalle">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>495</y>
-      <width>461</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Detalles</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lb_factura">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>535</y>
-      <width>191</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Detalles</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lb_boleta">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>535</y>
-      <width>191</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Detalles</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
@@ -131,32 +92,6 @@
     </property>
     <property name="scaledContents">
      <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lb_guia">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>570</y>
-      <width>281</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lb_detalle2">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>570</y>
-      <width>161</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
     </property>
    </widget>
    <widget class="QGroupBox" name="groupBox_3">
@@ -447,8 +382,104 @@
      </rect>
     </property>
     <property name="text">
-     <string>Versión  5.2</string>
+     <string>Versión  5.3</string>
     </property>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>520</y>
+      <width>531</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="2">
+      <widget class="QLabel" name="lb_det_guia">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="lb_det_bol">
+       <property name="text">
+        <string>Detalles</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="lb_det_fact">
+       <property name="text">
+        <string>Detalles</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="lb_enc_fact">
+       <property name="text">
+        <string>Textlabel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="lb_alm_bol">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="lb_enc_bol">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QLabel" name="lb_det_cre">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QLabel" name="lb_enc_guia">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QLabel" name="lb_enc_cre">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLabel" name="lb_alm_fact">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QLabel" name="lb_alm_guia">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="3">
+      <widget class="QLabel" name="lb_alm_cre">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

@@ -3,3 +3,8 @@ port:5000
 filename:/Users/super/Desktop/VENTAS/
 dir_guias:/Users/super/Desktop/Madenco/capturador/guias/
 dir_creditos:/Users/super/Desktop/Madenco/capturador/credito/
+
+dir_guias:/Users/super/Desktop/Madenco/capturador/guias/
+dir_creditos:/Users/super/Desktop/Madenco/capturador/credito/
+opcguia:\\192.168.1.101\incoming\enco\Respaldo
+opcionalcredito:\\192.168.1.212\respaldo
