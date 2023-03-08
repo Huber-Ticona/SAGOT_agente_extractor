@@ -332,10 +332,47 @@ class menu(QMainWindow):
                             fecha = linea.split('  ')       #Se obtiene la fecha de tipo String
                             print(fecha[1])
 
-                        elif  linea[0:5] == 'Razon' :
+                            rut = linea[36:53]  # se obtiene el rut | limite [36:53] exacto
+                            rut = rut.split(': ')
+                            rut = rut[1]
+                            rut = rut.split('-')
+                            try:
+                                numeros = int(rut[0])
+                                numeros = str(numeros)
+                                lista = []
+                                for letra in numeros:
+                                    lista.append(letra)
+                                digito = self.calcular_verificador(lista)
+                                rut = str(numeros) + '-' + str(digito)
+                                #print(rut)
+                            except ValueError:
+                                rut = None
+                                #print(rut)
+
+
+                        elif  linea[0:5] == 'Razon' :  #Se obtiene el nombre del cliente.
                             nombre =linea.split(': ')
                             nombre = nombre[1]
                             cliente = nombre[:len(nombre)-1]
+                            cliente = cliente.rstrip()
+
+                        elif linea[0:4] == 'Giro':
+                            aux_lines = lines[i + 1]
+                            auxlinea = aux_lines
+                            direccion = auxlinea[0:len(auxlinea) - 1] #se obtiene la direccion
+                            #print(direccion)  
+
+                        elif linea[0:8] == 'Telefono':
+                            telefono = linea[9:23] 
+                            print(telefono)  #se obtiene el telefono
+                            print(f'longuitud: {str(len(telefono))}')
+                            if telefono == '              ':
+                                telefono = ''
+                                print('telefono no encontrado')
+                            else:
+                                telefono = int(telefono)
+                                print(telefono)
+                                print(f'longuitud: {len(str(telefono))}')
 
                         elif(linea[0:4] == 'Hora' ):
                             hora = linea.split(' ')         #Se obtiene la hora de tipo String
@@ -345,11 +382,11 @@ class menu(QMainWindow):
                             vendedor = linea.split(': ')
                             vendedor = vendedor[1]
                             vendedor = vendedor[:len(vendedor)-1] #Se obtiene el nombre del vendedor de tipo string
-                            print(vendedor)                      
+                            #print(vendedor)                      
                         elif(linea[0:5] == 'Total'):
                             total = linea.split('     ')
                             total = float(total[1])                   #Se obtiene el total de la venta de tipo float
-                            print(total)
+                            #print(total)
                             
 
                         
@@ -389,8 +426,24 @@ class menu(QMainWindow):
             l_datos.append(vendedor)
             l_datos.append(total)
             l_datos.append(cliente) #v4
+            l_datos.append(rut) #v5.4 agente
             try:
                 self.conexion.root.registrar_factura(l_datos , items )
+                #Se verifica si el cliente ya fue registrado, sino se registra.
+                print('----registrar cliente de factura---------')
+                if rut != None: #El rut sea valido
+                    print('RUT VALIDO --> SE VERIFICA SI TIENE DATOS EL RUT')
+                    datos_cliente = self.conexion.root.obtener_cliente(rut)
+                    if datos_cliente == None:
+                        print('RUT NO TIENE DATOS REGISTRADOS --> SE PROCEDE A REGISTRAR EL CLIENTE')
+                        #se registra el cliente
+                        datos_cliente = (rut,cliente,direccion,'',telefono )
+                        self.conexion.root.registrar_cliente(datos_cliente)
+                    else:
+                        print('RUT YA TIENE DATOS REGISTRADOS --> NO SE VUELVE A REGISTRAR EL CLIENTE')
+                else:
+                    print('RUT NO VALIDO --> NO SE REGISTRA EL CLIENTE')
+                print('----FIN registrar cliente ---------')
                 #factura +1
             except EOFError:
                 print('se perdio la conexion -- durante el envio de la factura: ' + str(folio))
@@ -434,15 +487,16 @@ class menu(QMainWindow):
             #print(rut)
             rut = rut[1].split(' ')
             rut = rut[0]  #RUT DE TIPO STRING
-            #print(rut)
+            print(rut)
 
             linea_tres = lines[2]
             razon_social = linea_tres[0:56]
             #print(razon_social)
             razon_social = razon_social.split(': ')
             #print(razon_social)
-            razon_social = razon_social[1]
-            #print(razon_social)
+            razon_social = razon_social[1]  #nombre cliente
+            razon_social = razon_social.rstrip() #sin espacios de sobra derechos
+            print(razon_social)
 
             doc_ref = linea_tres[56:80].split(': ') #doc ref el max se estimo.
             
@@ -478,12 +532,17 @@ class menu(QMainWindow):
 
             direccion = lines[4]
             direccion = direccion[0:42]  
+            direccion = direccion.rstrip()  #sin espacios de sobra derechos
             #print(direccion)
 
             linea_seis = lines[5]
             telefono = linea_seis[0:32].split(': ')
             telefono = telefono[1]
-            #print(telefono)
+            try:
+                telefono = int(telefono)
+            except:
+                telefono = 0 
+            print(telefono)
 
             linea_nueve = lines[8]
             vendedor = linea_nueve.split(': ')
@@ -614,10 +673,27 @@ class menu(QMainWindow):
             try:
                 if self.conexion.root.registrar_guia( folio,interno, fecha_final, razon_social, detalle ) :
                     print('REGISTRADA CORRECTAMENTE')
+                    print('----registrar cliente de guia---------')
+                    if rut != None: #El rut sea valido
+                        print('RUT VALIDO --> SE VERIFICA SI TIENE DATOS EL RUT')
+                        datos_cliente = self.conexion.root.obtener_cliente(rut)
+                        if datos_cliente == None:
+                            print('RUT guia NO TIENE DATOS REGISTRADOS --> SE PROCEDE A REGISTRAR EL CLIENTE')
+                            #se registra el cliente
+                            datos_cliente = (rut,razon_social,direccion,'',telefono )
+                            self.conexion.root.registrar_cliente(datos_cliente)
+                        else:
+                            print('RUT guia YA TIENE DATOS REGISTRADOS --> NO SE VUELVE A REGISTRAR EL CLIENTE')
+                    else:
+                        print('RUT NO VALIDO --> NO SE REGISTRA EL CLIENTE')
+                    print('----FIN registrar cliente ---------')
+
                     if self.conexion.root.añadir_vinculo_guia_a_venta(tipo_doc,doc_ref,folio):
                         print('vinculo añadido con exito')
                     else:
                         print('vinculo añadido sin exito')
+                    
+
                 else:
                     print("ERROR AL REGISTRAR")
 
@@ -1145,7 +1221,31 @@ class menu(QMainWindow):
             self.lb_enc_bol.setText('NO ENCONTRADA: '+ str(self.boleta))    
             time.sleep(2)
         print('------------------------------------------------------------------')  
-                            
+
+    def calcular_verificador(self,rut):
+        
+        rut.reverse()
+        recorrido = 2
+        multiplicar = 0
+        for x in rut:
+            multiplicar +=int(x)*recorrido
+
+            if recorrido==7: 
+                recorrido = 1
+
+            recorrido+=1
+        modulo = multiplicar % 11
+        resultado = 11-modulo
+
+        if resultado == 11: 
+            digito=0
+        elif resultado == 10: 
+            digito="K"
+        else: 
+            digito=resultado
+
+        return digito
+
     def obtener_fact_bol_ordenadas(self):
         if(os.path.isdir(self.filename)):
             contenido = os.listdir(self.filename)
@@ -1225,7 +1325,8 @@ class menu(QMainWindow):
 
     def closeEvent(self, event):
         self.detener()
-        self.detener2()
+        self.detener2() 
+        self.detener3() #porque no puse detener3() , error!!
         event.accept()
 
 if __name__ == "__main__":

@@ -1,3 +1,14 @@
+[Version 5.4.1 (9-3-22)]
+- registrar clientes mediante guia 
+
+[Version 5.4 (2-3-22)]
+- registrar clientes mediante factura agregado.
+- gestion de cupones
+- gestion de clientes
+
+[Version 5.3.1 (8-1-22)]
+- Se arreglo bug de credito, y mejora de interrfaz del debug
+
 [Version 5.3 ()]
 - Se añadio el capturador de guías y el capturador de notas de credito. y la interfaz
 

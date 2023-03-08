@@ -382,7 +382,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Versión  5.3</string>
+     <string>Versión  5.4</string>
     </property>
    </widget>
    <widget class="QWidget" name="gridLayoutWidget">
